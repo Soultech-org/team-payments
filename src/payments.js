@@ -1,3 +1,4 @@
+// in-memory store; demo only, not persisted
 const charges = new Map();
 
 function createCharge({ amount, currency = "usd", customerId }) {
@@ -15,10 +16,12 @@ function createCharge({ amount, currency = "usd", customerId }) {
 }
 
 function getCharge(id) {
+  // returns null rather than undefined for a consistent "not found" shape
   return charges.get(id) ?? null;
 }
 
 function captureCharge(id) {
+  // no-op if already captured; charge.status isn't checked before overwriting
   const charge = charges.get(id);
   if (!charge) {
     throw new Error("charge not found");
