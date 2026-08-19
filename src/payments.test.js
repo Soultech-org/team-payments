@@ -1,4 +1,4 @@
-const { createCharge, getCharge } = require("./payments");
+const { createCharge, getCharge, captureCharge } = require("./payments");
 
 describe("payments", () => {
   test("creates a charge", () => {
@@ -11,5 +11,14 @@ describe("payments", () => {
     expect(() => createCharge({ amount: 0, customerId: "cus_1" })).toThrow(
       "amount must be positive",
     );
+  });
+
+  test("captures a charge", () => {
+    const charge = createCharge({ amount: 500, customerId: "cus_2" });
+    expect(captureCharge(charge.id).status).toBe("captured");
+  });
+
+  test("throws when capturing an unknown charge", () => {
+    expect(() => captureCharge("does-not-exist")).toThrow("charge not found");
   });
 });
