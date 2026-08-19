@@ -1,10 +1,3 @@
 #!/bin/bash
-cat <<'JSON'
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "Edits to CLAUDE.md are blocked by policy. Propose changes via a pull request instead."
-  }
-}
-JSON
+echo "CLAUDE.md is protected — edit it manually, not via an agent." >&2
+exit 2
