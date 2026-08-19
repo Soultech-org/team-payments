@@ -18,4 +18,13 @@ function getCharge(id) {
   return charges.get(id) ?? null;
 }
 
-module.exports = { createCharge, getCharge, charges };
+function captureCharge(id) {
+  const charge = charges.get(id);
+  if (!charge) {
+    throw new Error("charge not found");
+  }
+  charge.status = "captured";
+  return charge;
+}
+
+module.exports = { createCharge, getCharge, captureCharge, charges };
