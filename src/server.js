@@ -9,6 +9,10 @@ function createApp() {
     res.json({ ok: true, service: "payments" });
   });
 
+  app.get("/ready", (_req, res) => {
+    res.json({ ready: true, service: "payments" });
+  });
+
   app.post("/charges", (req, res) => {
     try {
       res.status(201).json(createCharge(req.body));
