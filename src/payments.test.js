@@ -1,4 +1,4 @@
-const { createCharge, getCharge } = require("./payments");
+const { createCharge, getCharge, refundCharge } = require("./payments");
 
 describe("payments", () => {
   test("creates a charge", () => {
@@ -11,5 +11,10 @@ describe("payments", () => {
     expect(() => createCharge({ amount: 0, customerId: "cus_1" })).toThrow(
       "amount must be positive",
     );
+  });
+
+  test("refunds a charge", () => {
+    const charge = createCharge({ amount: 500, customerId: "cus_2" });
+    expect(refundCharge(charge.id).status).toBe("refunded");
   });
 });

@@ -18,4 +18,16 @@ function getCharge(id) {
   return charges.get(id) ?? null;
 }
 
-module.exports = { createCharge, getCharge, charges };
+function refundCharge(id) {
+  const charge = charges.get(id);
+  if (!charge) {
+    throw new Error("charge not found");
+  }
+  if (charge.status === "refunded") {
+    throw new Error("already refunded");
+  }
+  charge.status = "refunded";
+  return charge;
+}
+
+module.exports = { createCharge, getCharge, refundCharge, charges };
